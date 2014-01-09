@@ -16,5 +16,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.cache.auto_detect = true
   config.cache.enable :apt
 
+  config.vm.provision :shell do |shell|
+    shell.path = "build-5.4.sh"
+  end
+
 end
 
