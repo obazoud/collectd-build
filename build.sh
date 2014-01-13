@@ -15,10 +15,18 @@ if [ ! -d /usr/src/collectd ]; then
 fi
 
 cd collectd
-git checkout collectd-5.4.0
+HASH=`git rev-parse --short HEAD`
+#git checkout collectd-5.4.0
 
 ./clean.sh
 ./build.sh
 ./configure --enable-curl --enable-curl_json --enable-curl_xml --enable-dbi --enable-smtp --enable-ping
 make
 make install
+
+CURRENT_DATE=`date +%Y%m%d`
+cd /opt
+mv collectd collectd-${HASH}
+ln -sf collectd-${HASH} collectd
+tar czf collectd-${CURRENT_DATE}-${HASH}.tar.gz collectd-${HASH}
+
